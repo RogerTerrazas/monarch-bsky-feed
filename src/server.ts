@@ -1,4 +1,4 @@
-import http from 'http'
+import https from 'http'
 import events from 'events'
 import express from 'express'
 import { DidResolver, MemoryCache } from '@atproto/identity'
@@ -12,7 +12,7 @@ import wellKnown from './well-known'
 
 export class FeedGenerator {
   public app: express.Application
-  public server?: http.Server
+  public server?: https.Server
   public db: Database
   public firehose: FirehoseSubscription
   public cfg: Config
@@ -61,7 +61,7 @@ export class FeedGenerator {
     return new FeedGenerator(app, db, firehose, cfg)
   }
 
-  async start(): Promise<http.Server> {
+  async start(): Promise<https.Server> {
     await migrateToLatest(this.db)
     this.firehose.run(this.cfg.subscriptionReconnectDelay)
     this.server = this.app.listen(this.cfg.port, this.cfg.listenhost)
