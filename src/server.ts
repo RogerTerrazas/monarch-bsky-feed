@@ -55,7 +55,7 @@ export class FeedGenerator {
     }
     feedGeneration(server, ctx)
     describeGenerator(server, ctx)
-    app.use(server.xrpc.router)
+    // app.use(server.xrpc.router)
     app.use(wellKnown(ctx))
 
     return new FeedGenerator(app, db, firehose, cfg)
