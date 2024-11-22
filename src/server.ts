@@ -55,7 +55,7 @@ export class FeedGenerator {
     }
     feedGeneration(server, ctx)
     describeGenerator(server, ctx)
-    // app.use(server.xrpc.router)
+    app.use(server.xrpc.router)
     app.use(wellKnown(ctx))
 
     return new FeedGenerator(app, db, firehose, cfg)
@@ -63,7 +63,7 @@ export class FeedGenerator {
 
   async start(): Promise<https.Server> {
     await migrateToLatest(this.db)
-    this.firehose.run(this.cfg.subscriptionReconnectDelay)
+    // this.firehose.run(this.cfg.subscriptionReconnectDelay)
     this.server = this.app.listen(this.cfg.port, this.cfg.listenhost)
     await events.once(this.server, 'listening')
     return this.server
