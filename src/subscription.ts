@@ -26,14 +26,13 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
     const postsToCreate = ops.likes.creates
       .filter((create) => {
         // only alf-related posts'
-        // console.log(create)
         return create.author === 'did:plc:74ru7sgelntmyfjfjssqhvrc'
       })
       .map((create) => {
+        console.log(create)
         // map rogers liked posts to a db row
-        const parsedUri = parsePostURI(create.uri)
         return {
-          uri: parsedUri,
+          uri: create.record.subject.uri,
           cid: create.cid,
           indexedAt: new Date().toISOString(),
         }
