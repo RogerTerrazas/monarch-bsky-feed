@@ -13,18 +13,24 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
     // This logs the text of every post off the firehose.
     // Just for fun :)
     // Delete before actually using
-    for (const post of ops.posts.creates) {
-      console.log(post.record.text)
-    }
+    // for (const post of ops.posts.creates) {
+    //   console.log(post.record.text)
+    // }
+
+    // for (const post of ops.likes.creates) {
+    //   console.log(post.record.uri)
+    // }
 
     const postsToDelete = ops.posts.deletes.map((del) => del.uri)
-    const postsToCreate = ops.posts.creates
+    const postsToCreate = ops.likes.creates
       .filter((create) => {
-        // only alf-related posts
-        return create.record.text.toLowerCase().includes('alf')
+        // only alf-related posts'
+        // console.log(create)
+        return create.author === 'did:plc:74ru7sgelntmyfjfjssqhvrc'
       })
       .map((create) => {
-        // map alf-related posts to a db row
+        // map rogers liked posts to a db row
+        console.log(create)
         return {
           uri: create.uri,
           cid: create.cid,
