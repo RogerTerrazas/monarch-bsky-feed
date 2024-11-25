@@ -3,6 +3,7 @@ import {
   isCommit,
 } from './lexicon/types/com/atproto/sync/subscribeRepos'
 import { FirehoseSubscriptionBase, getOpsByType } from './util/subscription'
+import { parsePostURI } from './util/bluesky-utils'
 
 export class FirehoseSubscription extends FirehoseSubscriptionBase {
   async handleEvent(evt: RepoEvent) {
@@ -30,9 +31,9 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
       })
       .map((create) => {
         // map rogers liked posts to a db row
-        console.log(create)
+        const parsedUri = parsePostURI(create.uri)
         return {
-          uri: create.uri,
+          uri: parsedUri,
           cid: create.cid,
           indexedAt: new Date().toISOString(),
         }
